@@ -11,9 +11,15 @@ public class GreetingControlller {
 
     GameState logic = new GameState();
 
+    // HTML geeft waarde aan JavaScript
+    // JS stuurt JSON naar app/hello via ws
+    // met 'name': $("#slotNumber").val()
+    // Controller zet JSON om naar HelloMessag welke een atribuut heeft genaamd "name"
+    // Hier moet ik de logica laten uitvoeren van de game
+
     @MessageMapping("/hello")
-    @SendTo("/tictactoe/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
+    @SendTo("/tictactoe/moves")
+    public Move move(HelloMessage message) throws Exception {
         Thread.sleep(100); // simulated delay
 
         if (logic.getIsReady()) {
@@ -24,13 +30,13 @@ public class GreetingControlller {
         }
     }
 
-    public Greeting makeMove(HelloMessage message) {
+    public Move makeMove(HelloMessage message) {
 //        if (message.getName().equals("X")) {
 //            return new Greeting("Movement = " + HtmlUtils.htmlEscape(message.getName()) + logic.printBoard());
 //        }
-        return new Greeting(" - " + HtmlUtils.htmlEscape(logic.turnHumanPlayer(message.getName())));
+        //return new Greeting(" - " + HtmlUtils.htmlEscape(logic.turnHumanPlayer(message.getName()))); //HtmlUtils.htmlEscape = Turn special characters into HTML character references
+        return new Move(logic.turnHumanPlayer(message.getName()));
     }
-
 
 
 }

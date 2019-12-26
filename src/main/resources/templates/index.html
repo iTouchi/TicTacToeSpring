@@ -12,12 +12,57 @@
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
 </head>
+
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
+
+<!-- Create and Join Game Menu -->
+<div id="menu" class="container">
     <div class="row">
+        <div class="col-md-12">
+            <h1>Tic Tac Toe</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-inline float-lg-right">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createGameModal">
+                        Create Game
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="gamelist" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="col-md-6">
+                            <button id="refresh" class="btn btn-primary btn-sm">
+                                <span class="fa fa-refresh"></span> Refresh
+                            </button>
+                            <span>&nbsp;Available Games</span>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="games">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Send Message  -->
+<div id="main-content" class="container">
+
+    <div class="row">
+
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
@@ -28,17 +73,22 @@
                 </div>
             </form>
         </div>
+
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="slotNumber">What is your name?</label>
+                    <label for="slotNumber">Which slot?</label>
+
                     <input type="text" id="slotNumber" class="form-control" placeholder="Slot number here...">
                 </div>
                 <button id="sendo" class="btn btn-default" type="submit">Send</button>
             </form>
         </div>
+
     </div>
+
     <div class="row">
+
         <div class="col-md-12">
             <table id="conversation" class="table table-striped">
                 <thead>
@@ -50,7 +100,9 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
+
 </body>
 </html>

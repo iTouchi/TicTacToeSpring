@@ -241,7 +241,7 @@ public class GameState {
             if (line.equals(playerOne.getSymbol() + playerOne.getSymbol() + playerOne.getSymbol())) {
                 return "The winner is " + playerOne.getName();
             } else if (line.equals(playerTwo.getSymbol() + playerTwo.getSymbol() + playerTwo.getSymbol())) {
-                return playerTwo.getName();
+                return "The winner is " + playerTwo.getName();
             } else if (allTilesOccupied) {
                 return "The game ended in a draw";
             }

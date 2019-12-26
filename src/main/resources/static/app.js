@@ -18,9 +18,9 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/tictactoe/greetings', function (greeting) { //was /topic/greetings
-            showGreeting(JSON.parse(greeting.body).content);
-        });
+        stompClient.subscribe('/tictactoe/moves', function (move) { //was /topic/greetings //move was greeting
+            showGreeting(JSON.parse(move.body).content);
+        });1
     });
 }
 
