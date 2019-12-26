@@ -2,22 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>Hello WebSocket</title>
+
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--    <link href="/main.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link href="/main.css" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.4.1.js"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
             crossorigin="anonymous"></script>
+
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
 </head>
+
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
+
+<!-- Send Message  -->
+<div id="login-content" class="container">
+    <div class="col-md-6">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="usernameSlot">Username</label>
+                <input type="text" id="usernameSlot" class="form-control" placeholder="Enter Username">
+                <label for="pswSlot">Password</label>
+                <input type="text" id="pswSlot" class="form-control" placeholder="Enter Username">
+            </div>
+            <button id="sendCredentials" class="btn btn-default" type="submit">Login</button>
+        </form>
+    </div>
+
+</div>
+
+<div id="main-content" class="container" > <!--style="display: none;"-->
+
     <div class="row">
+
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
@@ -28,17 +53,21 @@
                 </div>
             </form>
         </div>
+
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="slotNumber">What is your name?</label>
+                    <label for="slotNumber">Which slot?</label>
                     <input type="text" id="slotNumber" class="form-control" placeholder="Slot number here...">
                 </div>
                 <button id="sendo" class="btn btn-default" type="submit">Send</button>
             </form>
         </div>
+
     </div>
+
     <div class="row">
+
         <div class="col-md-12">
             <table id="conversation" class="table table-striped">
                 <thead>
@@ -50,7 +79,10 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
+
+
 </body>
 </html>

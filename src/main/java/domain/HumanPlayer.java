@@ -3,6 +3,7 @@ package domain;
 public class HumanPlayer extends Player{
     private int id;
     private String name;
+    private String password;
     private int wins;
     private int losses;
     private int draw;
@@ -16,6 +17,15 @@ public class HumanPlayer extends Player{
     @Override
     public String getSymbol() {
         return symbol;
+    }
+
+    public HumanPlayer(){
+        
+    }
+
+    public HumanPlayer(String name, String password){
+        this.name = name;
+        this.password = password;
     }
 
     public HumanPlayer(int id, String name, int wins, int losses, int draw, String symbol) {
@@ -69,5 +79,8 @@ public class HumanPlayer extends Player{
         this.draw = draw;
     }
 
+    public String getPassword(){
+        return this.password;
+    }
 
 }

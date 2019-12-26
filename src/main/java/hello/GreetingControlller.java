@@ -19,7 +19,7 @@ public class GreetingControlller {
 
     @MessageMapping("/hello")
     @SendTo("/tictactoe/moves")
-    public Move move(HelloMessage message) throws Exception {
+    public Move move(Move message) throws Exception {
         Thread.sleep(100); // simulated delay
 
         if (logic.getIsReady()) {
@@ -30,12 +30,20 @@ public class GreetingControlller {
         }
     }
 
-    public Move makeMove(HelloMessage message) {
-//        if (message.getName().equals("X")) {
-//            return new Greeting("Movement = " + HtmlUtils.htmlEscape(message.getName()) + logic.printBoard());
-//        }
+    @MessageMapping("/jello")
+    public HumanPlayer humanPlayer(HumanPlayer message) throws Exception {
+        Thread.sleep(100); // simulated delay
+
+        HumanPlayer hp = new HumanPlayer(message.getName(),message.getPassword());
+        System.out.println("UNAME : " + hp.getName() + " PASS : " +  hp.getPassword());
+        return hp;
+    }
+
+
+    public Move makeMove(Move message) {
+
         //return new Greeting(" - " + HtmlUtils.htmlEscape(logic.turnHumanPlayer(message.getName()))); //HtmlUtils.htmlEscape = Turn special characters into HTML character references
-        return new Move(logic.turnHumanPlayer(message.getName()));
+        return new Move(logic.turnHumanPlayer(message.getContent()));
     }
 
 
