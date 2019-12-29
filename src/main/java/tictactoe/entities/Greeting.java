@@ -1,4 +1,4 @@
-package hello;
+package tictactoe.entities;
 
 public class Greeting {
 

@@ -1,10 +1,9 @@
-package hello;
+package tictactoe.controllers;
 
-import domain.*;
+import tictactoe.entities.*;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.util.HtmlUtils;
 
 @Controller
 public class GreetingControlller {
@@ -12,7 +11,7 @@ public class GreetingControlller {
     GameState logic = new GameState();
 
     // HTML geeft waarde aan JavaScript
-    // JS stuurt JSON naar app/hello via ws
+    // JS stuurt JSON naar app/tictactoe.hello via ws
     // met 'name': $("#slotNumber").val()
     // Controller zet JSON om naar HelloMessag welke een atribuut heeft genaamd "name"
     // Hier moet ik de logica laten uitvoeren van de game

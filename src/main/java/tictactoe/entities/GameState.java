@@ -1,4 +1,4 @@
-package domain;
+package tictactoe.entities;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -48,8 +48,8 @@ public class GameState {
         startingPlayer = 0;
 
         if (startingPlayer == 0) {
-            playerOne = new HumanPlayer(0, "Jan", 0, 0, 0, "X");
-            playerTwo = new HumanPlayer(1, "Ai", 0, 0, 0, "O");
+            playerOne = new HumanPlayer(0, "Jan", "X");
+            playerTwo = new HumanPlayer(1, "Ai",  "O");
         }
 
         board = new Board();

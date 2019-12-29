@@ -1,4 +1,4 @@
-package domain;
+package tictactoe.entities;
 
 public class Move {
 

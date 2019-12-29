@@ -22,7 +22,6 @@ function connect() {
         stompClient.subscribe('/tictactoe/moves', function (move) { //was /topic/greetings //move was greeting
             showGreeting(JSON.parse(move.body).content);
         });
-        1
     });
 }
 
@@ -42,10 +41,6 @@ function sendSlotNumber() {
 
 function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message + "</td></tr>");
-}
-
-function sendMove(x, y, z) {
-    stompClient.send("/app/hello", {}, JSON.stringify({'content': z, 'row': x, 'col': y}));
 }
 
 function senCreds() {

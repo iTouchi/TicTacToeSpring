@@ -1,4 +1,4 @@
-package domain;
+package tictactoe.entities;
 
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
