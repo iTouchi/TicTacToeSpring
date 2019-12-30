@@ -43,11 +43,22 @@ function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message + "</td></tr>");
 }
 
+// function senCreds() {
+//     stompClient.send("/app/jello", {}, JSON.stringify(
+// //         {'userName': $("#usernameSlot").val(), 'password': $("#pswSlot").val()}
+//     ));
+// }
 function senCreds() {
-    stompClient.send("/app/jello", {}, JSON.stringify(
-        {'name': $("#usernameSlot").val(), 'password': $("#pswSlot").val()}
-    ));
-}
+    $.ajax({
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(
+            {'userName': $("#usernameSlot").val(), 'password': $("#pswSlot").val()}),
+        contentType: "application/json; charset=utf-8",
+        url: 'http://localhost:8095/user'
+    });
+};
+
 
 $(function () {
     $("form").on('submit', function (e) {
