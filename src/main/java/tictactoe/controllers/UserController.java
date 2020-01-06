@@ -17,6 +17,11 @@ public class UserController {
 
     private TestPlayerRepository exampleRepository;
 
+    // User comes in, controller checks if user name is in DB
+    // if Username is not in DB controller make new user
+    // if username is in DB controller sends error message.
+
+
     @Autowired
     public void setExampleRepository(TestPlayerRepository exampleRepository){
         this.exampleRepository = exampleRepository;
