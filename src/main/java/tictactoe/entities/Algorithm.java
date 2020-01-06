@@ -126,11 +126,11 @@ public class Algorithm {
     }
 
     // Find the move with the best value
-    public PlayerMoveMessage findBestMove(String[][] board, Player playerOne, Player playerTwo) {
+    public MoveModel findBestMove(String[][] board, Player playerOne, Player playerTwo) {
         int bestVal = -1000;
-        PlayerMoveMessage bestMove = new PlayerMoveMessage();
-        bestMove.row = -1;
-        bestMove.col = -1;
+        MoveModel bestMove = new MoveModel();
+        bestMove.x = -1;
+        bestMove.y = -1;
 
         // Traverse all cells, evaluate minimax function for all empty cells.
         // Return the cell with with the optimal value.
@@ -151,8 +151,8 @@ public class Algorithm {
                     // If the value of the current move is more than the best value
                     // update best value.
                     if (moveVal > bestVal) {
-                        bestMove.row = i;
-                        bestMove.col = j;
+                        bestMove.x = i;
+                        bestMove.y = j;
                         bestVal = moveVal;
                     }
                 }
