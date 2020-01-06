@@ -126,9 +126,9 @@ public class Algorithm {
     }
 
     // Find the move with the best value
-    public Move findBestMove(String[][] board, Player playerOne, Player playerTwo) {
+    public PlayerMoveMessage findBestMove(String[][] board, Player playerOne, Player playerTwo) {
         int bestVal = -1000;
-        Move bestMove = new Move();
+        PlayerMoveMessage bestMove = new PlayerMoveMessage();
         bestMove.row = -1;
         bestMove.col = -1;
 

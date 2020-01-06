@@ -1,54 +1,20 @@
 package tictactoe.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.web.bind.annotation.*;
-import tictactoe.entities.HumanPlayer;
-import tictactoe.entities.User;
-import tictactoe.repositories.TestPlayerRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import java.security.Principal;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(value = "/user")
 public class UserController {
 
-    private TestPlayerRepository exampleRepository;
+// this class is for OAuth
 
-    // User comes in, controller checks if user name is in DB
-    // if Username is not in DB controller make new user
-    // if username is in DB controller sends error message.
-
-
-    @Autowired
-    public void setExampleRepository(TestPlayerRepository exampleRepository){
-        this.exampleRepository = exampleRepository;
+    @GetMapping("/")
+    public Principal showPrincipal(Principal principal){
+        return principal;
     }
 
-    @GetMapping()
-    public List<User> getAllExamples() {
-        return exampleRepository.findAll();
-    }
-
-    @GetMapping(path = "/{id}")
-    public Optional<User> getExample(@PathVariable String id){
-        return exampleRepository.findById(id);
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addExample(@RequestBody User player){
-        exampleRepository.save(player);
-    }
-
-    @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateExample(@PathVariable String id, @RequestBody User player){
-        exampleRepository.save(player);
-    }
-
-    @DeleteMapping(path = "{id}")
-    public void deleteExample(@PathVariable String id){
-        exampleRepository.deleteById(id);
-    }
 }

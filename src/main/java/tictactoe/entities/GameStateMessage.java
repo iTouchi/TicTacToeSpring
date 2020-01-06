@@ -1,23 +1,20 @@
 package tictactoe.entities;
 
-public class Move {
+import org.springframework.stereotype.Component;
 
-    public int row, col;
+@Component
+public class GameStateMessage {
 
     private String content;
 
-
-    public Move(){
-
+    public GameStateMessage() {
     }
 
-    public Move(String content) {
+    public GameStateMessage(String content) {
         this.content = content;
     }
 
     public String getContent() {
         return content;
     }
-
 }
-
