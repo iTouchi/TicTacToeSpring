@@ -136,9 +136,10 @@ public class GameStateModel {
 
             String s = playerSymbol.equals(playerOne.getSymbol()) ? "X" : "O";
             board.setTile(x,y,s) ;
-            MoveModel m = algo.findBestMove(board.getTiles(),playerOne,playerTwo);
-            board.setTile(m.x,m.y,"O");
-
+            if(algo.isMoveLeft(board.getTiles())){
+                MoveModel m = algo.findBestMove(board.getTiles(),playerOne,playerTwo);
+                board.setTile(m.x,m.y,"O");
+            }
 
             if (checkForWinner("X")) winner = playerOne.getSymbol();
             if (checkForWinner("O")) winner = playerTwo.getSymbol();
