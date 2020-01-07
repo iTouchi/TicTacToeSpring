@@ -139,7 +139,8 @@ public class Algorithm {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Check if cell is empty
-                if (board[i][j] != "X" && board[i][j] != "O" || board[i][j] == "") {
+                //WTF!
+                if (board[i][j].equals("")) {
                     // Make the move
                     board[i][j] = playerOne.getSymbol();
 
