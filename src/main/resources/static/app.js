@@ -1,8 +1,9 @@
 var stompClient = null;
-var uid = randString(32);
+var uid = randomString(32);
 var gid = null;
 var gamestate = null;
 var player = "X";
+var isAi = null;
 
 function connect() {
     var socket = new SockJS('/tictactoe-websocket');
@@ -57,20 +58,24 @@ function rematch() {
 }
 
 function sendMove(x, y) {
-    stompClient.send("/tictactoe/move/" + gid, {}, JSON.stringify({'player': uid, 'x': x, 'y': y}));
+    if (!isAi) {
+        stompClient.send("/tictactoe/move/" + gid, {}, JSON.stringify({'player': uid, 'x': x, 'y': y}));
+    }
+    if (isAi) {
+        stompClient.send("/tictactoe/moveAi/" + gid, {}, JSON.stringify({'player': uid, 'x': x, 'y': y}));
+    }
 }
 
 function refresh() {
-    $.getJSON("/tictactoe/games/", function(data){
+    $.getJSON("/tictactoe/games/", function (data) {
         $("#games").empty();
 
         if (data.length > 0) {
             for (var game in data) {
                 game = data[game];
-                $("#games").append("<tr><td><button id=\"" + game.id + "\" class=\"btn btn-success btn-sm\">Join</button>&nbsp;" + game.name  + "</td></tr>");
+                $("#games").append("<tr><td><button id=\"" + game.id + "\" class=\"btn btn-success btn-sm\">Join</button>&nbsp;" + game.name + "</td></tr>");
             }
-        }
-        else {
+        } else {
             $("#games").append("<tr><td>There are no games currently available. Try creating your own!</td></tr>");
         }
     });
@@ -87,7 +92,7 @@ function create() {
             player: uid,
             name: name
         }
-    }).done(function(data) {
+    }).done(function (data) {
         console.log("Created Game");
 
         player = "X";
@@ -102,6 +107,30 @@ function create() {
     });
 }
 
+function ai(gid) {
+    $.ajax({
+        url: "/tictactoe/ai",
+        type: "patch",
+        data: {
+            player: "ai",
+            id: gid
+        }
+    }).done(function (data) {
+        if (!data) {
+            alert("Game is no longer available.", refresh);
+            refresh();
+            return;
+        }
+
+        console.log("Ai has joined the Game");
+        //player = "O";
+        isAi = "true";
+
+        gid = data.id;
+        updateGamestate(data);
+    });
+}
+
 function join(id) {
     $.ajax({
         url: "/tictactoe/game",
@@ -110,7 +139,7 @@ function join(id) {
             player: uid,
             id: id
         }
-    }).done(function(data) {
+    }).done(function (data) {
         if (!data) {
             alert("Game is no longer available.", refresh);
             refresh();
@@ -169,11 +198,9 @@ function gameStatus() {
     // status
     if (!gamestate.started) {
         status = "Waiting for second player...";
-    }
-    else if (gamestate.disconnect) {
+    } else if (gamestate.disconnect) {
         status = "Other player has disconnected!"
-    }
-    else {
+    } else {
         status = "Both players are here! You are '" + player + "'."
     }
 
@@ -181,19 +208,15 @@ function gameStatus() {
 
     if (gamestate.started && !gamestate.winner && !gamestate.draw) {
         status2 = "'" + gamestate.startingPlayer + "' goes first.";
-    }
-    else if (gamestate.winner) {
+    } else if (gamestate.winner) {
         if (gamestate.winner == uid) {
             status2 = "You win!";
-        }
-        else {
+        } else {
             status2 = "You lost!";
         }
-    }
-    else if (gamestate.draw) {
+    } else if (gamestate.draw) {
         status2 = "It's a draw!"
-    }
-    else {
+    } else {
         status2 = "";
     }
 
@@ -201,7 +224,7 @@ function gameStatus() {
     $("#status2").text(status2);
 }
 
-function randString(length) {
+function randomString(length) {
     var text = "";
     var alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -213,6 +236,7 @@ function randString(length) {
 }
 
 var unloadCalled = false;
+
 function doUnload() {
     if (!unloadCalled) {
         unloadCalled = true;
@@ -227,16 +251,27 @@ $(function () {
 
     $("#tictactoe").hide();
 
-    $("#refresh").click(function() { refresh(); });
-    $("#create").click(function() { create(); });
-    $("#disconnect").click(function() { disconnect(); });
-    $("#rematch").click(function() { rematch(); });
-
-    $("#games").on( "click", "button", function() {
-        join( $(this).attr('id') );
+    $("#refresh").click(function () {
+        refresh();
+    });
+    $("#create").click(function () {
+        create();
+    });
+    $("#disconnect").click(function () {
+        disconnect();
+    });
+    $("#rematch").click(function () {
+        rematch();
+    });
+    $("#ai").click(function () {
+        ai(gid);
     });
 
-    $("#board").on( "click", "td", function() {
+    $("#games").on("click", "button", function () {
+        join($(this).attr('id'));
+    });
+
+    $("#board").on("click", "td", function () {
         sendMove($(this).attr('x'), $(this).attr('y'));
     });
 

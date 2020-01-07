@@ -33,6 +33,19 @@ public class GameController {
         return gsm;
     }
 
+    @MessageMapping("/moveAi/{id}")
+    @SendTo("/tictactoe/gamestate/{id}")
+    public GameStateModel gamestateAi(@DestinationVariable String id, PlayerMoveMessage move) throws Exception {
+        Optional<GameStateModel> game = repository.findById(id);
+
+        game.get().makeMoveAi(move.getX(), move.getY(), move.getPlayer());
+        repository.save(game.get());
+
+        GameStateModel gsm = game.get();
+
+        return gsm;
+    }
+
     @MessageMapping("join/{id}")
     public void join(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable String id, PlayerJoinMessage message) {
         Optional<GameStateModel> game = repository.findById(id);

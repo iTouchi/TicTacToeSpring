@@ -10,6 +10,7 @@ public class Algorithm {
 
     // Returns a values based on who is winning
     // board[3][3] is the Tic-Tac-Toe board
+    // change X & O to playerOne.symbol & playerTwo.symbol
     public int evaluate(String[][] board, int depth) {
 
         // Checking for horizontal victory
@@ -53,7 +54,7 @@ public class Algorithm {
     public boolean isMoveLeft(String[][] board) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == "_") {
+                if (board[i][j] == "") {
                     return true;
                 }
             }
@@ -87,7 +88,7 @@ public class Algorithm {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
-                    if (board[i][j] == "_") {
+                    if (board[i][j] == "") {
                         // Make the move
                         board[i][j] = playerOne.getSymbol();
 
@@ -95,7 +96,7 @@ public class Algorithm {
                         best = max(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));//CHANGED was !isMax
 
                         // Undo the move
-                        board[i][j] = "_";
+                        board[i][j] = "";
                     }
                 }
             }
@@ -109,7 +110,7 @@ public class Algorithm {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
-                    if (board[i][j] == "_") {
+                    if (board[i][j] == "") {
                         // Make the move
                         board[i][j] = playerTwo.getSymbol();
 
@@ -117,7 +118,7 @@ public class Algorithm {
                         best = min(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
 
                         // Undo the move
-                        board[i][j] = "_";
+                        board[i][j] = "";
                     }
                 }
             }
@@ -138,15 +139,15 @@ public class Algorithm {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Check if cell is empty
-                if (board[i][j] == "_") {
-                    // Makle the move
+                if (board[i][j] != "X" && board[i][j] != "O" || board[i][j] == "") {
+                    // Make the move
                     board[i][j] = playerOne.getSymbol();
 
                     // Compute evaluation function for this move.
                     int moveVal = minimax(board, 0, false, playerOne, playerTwo);
 
                     // Undo the move
-                    board[i][j] = "_";
+                    board[i][j] = "";
 
                     // If the value of the current move is more than the best value
                     // update best value.

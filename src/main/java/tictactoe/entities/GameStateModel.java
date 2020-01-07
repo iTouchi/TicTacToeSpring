@@ -22,6 +22,9 @@ public class GameStateModel {
     private Player playerOne;
     private Player playerTwo;
 
+    //Ai
+    Algorithm algo = new Algorithm();
+
     //For Mongo
     private String playerOneId;
     private String playerTwoId;
@@ -118,6 +121,30 @@ public class GameStateModel {
             if (checkForWinner("O")) winner = playerTwo.getSymbol();
             checkForDraw();
             swapCurrentPlayer();
+        }
+    }
+    public void makeMoveAi(int x, int y, String playerSymbol) {
+
+        // invalid move
+        if (x < 0 || x >= 3) return;
+        if (y < 0 || y >= 3) return;
+
+        // invalid player
+        if (!isValidPlayer(playerSymbol)) return;
+
+        if (started && !disconnect && !gameOver() && currentPlayer.equals(playerSymbol) && board.tiles[x][y].equals("")) {
+
+            String s = playerSymbol.equals(playerOne.getSymbol()) ? "X" : "O";
+            board.setTile(x,y,s) ;
+            MoveModel m = algo.findBestMove(board.getTiles(),playerOne,playerTwo);
+            board.setTile(m.x,m.y,"O");
+
+
+            if (checkForWinner("X")) winner = playerOne.getSymbol();
+            if (checkForWinner("O")) winner = playerTwo.getSymbol();
+            checkForDraw();
+//            swapCurrentPlayer();
+
         }
     }
 

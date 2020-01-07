@@ -67,6 +67,26 @@ public class ServerController {
         // return null if third player is trying to join or player left
         return null;
     }
+    @RequestMapping(method = RequestMethod.PATCH, value = "/tictactoe/ai", params = {"id", "player"})
+    public GameStateModel aiGame(
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "player") String player
+    ) {
+
+        Optional<GameStateModel> game = repository.findById(id);
+
+        if (!game.get().started && !game.get().disconnect) {
+            game.get().join("O");
+
+            repository.save(game.get());
+            updateGameState(id, game.get());
+
+            return game.get();
+        }
+
+        // return null if third player is trying to join or player left
+        return null;
+    }
 
     // Disconnect
     @RequestMapping(method = RequestMethod.PATCH, value = "/tictactoe/game", params = {"id", "player", "disconnect"})
