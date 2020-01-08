@@ -1,2 +1,1 @@
-# TicTacToeGameServer
-The back-end of TicTacToe
+# Big Idea Semester 3 Software
