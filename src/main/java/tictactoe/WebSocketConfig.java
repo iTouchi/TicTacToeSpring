@@ -14,8 +14,8 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/tictactoe"); //was ttt zit in controller
-        config.setApplicationDestinationPrefixes("/tictactoe"); //was ttt zit in JS
+        config.enableSimpleBroker("/tictactoe"); //zit in controller
+        config.setApplicationDestinationPrefixes("/tictactoe"); //zit in JS
     }
 
     @Override
