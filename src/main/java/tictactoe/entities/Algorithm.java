@@ -10,40 +10,39 @@ public class Algorithm {
 
     // Returns a values based on who is winning
     // board[3][3] is the Tic-Tac-Toe board
-    // change X & O to playerOne.symbol & playerTwo.symbol
-    public int evaluate(String[][] board, int depth) {
+    public int evaluate(String[][] board, int depth, String p1Symbol, String p2Symbol) {
 
         // Checking for horizontal victory
         for (int row = 0; row < 3; row++) {
-            if (board[row][0].equals(board[row][1])  && board[row][1].equals(board[row][2]) ) {
-                if (board[row][0].equals("X"))
+            if (board[row][0].equals(board[row][1]) && board[row][1].equals(board[row][2])) {
+                if (board[row][0].equals(p1Symbol))
                     return +10 - depth;
-                if (board[row][0].equals("O"))
+                if (board[row][0].equals(p2Symbol))
                     return -10 + depth;
             }
         }
 
         // Checking for vertical victory
         for (int col = 0; col < 3; col++) {
-            if (board[0][col].equals(board[1][col] )&& board[1][col].equals(board[2][col])) {
-                if (board[0][col].equals("X"))
+            if (board[0][col].equals(board[1][col]) && board[1][col].equals(board[2][col])) {
+                if (board[0][col].equals(p1Symbol))
                     return +10;
-                if (board[0][col].equals("O"))
+                if (board[0][col].equals(p2Symbol))
                     return -10;
             }
         }
 
         // Checking for diagonal victory
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2])) {
-            if (board[0][0].equals("X"))
+            if (board[0][0].equals(p1Symbol))
                 return +10;
-            if (board[0][0].equals("O"))
+            if (board[0][0].equals(p2Symbol))
                 return -10;
         }
         if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0])) {
-            if (board[0][2].equals("X"))
+            if (board[0][2].equals(p1Symbol))
                 return +10;
-            if (board[0][2].equals("O"))
+            if (board[0][2].equals(p2Symbol))
                 return -10;
         }
         // Else if none has won return 0 for Draw
@@ -64,7 +63,7 @@ public class Algorithm {
 
     // The minimax algorithm
     public int minimax(String[][] board, int depth, boolean isMax, Player playerOne, Player playerTwo) {
-        int score = evaluate(board, depth);
+        int score = evaluate(board, depth, playerOne.getSymbol(), playerTwo.getSymbol());
 
         // If Maximizer has won the gameSession will return the evaluated score for the Maximizer
         if (score == 10) {
@@ -90,7 +89,7 @@ public class Algorithm {
                     // Check if cell is empty
                     if (board[i][j].equals("")) {
                         // Make the move
-                        board[i][j] = playerOne.getSymbol();
+                        board[i][j] = playerTwo.getSymbol();
 
                         // Call minimax recursively and choose the max value
                         best = max(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));//CHANGED was !isMax
@@ -159,6 +158,7 @@ public class Algorithm {
             }
         }
         System.out.println("The value of the best move is : " + bestVal);
+        System.out.println("The best tile is : x: " + bestMove.x +" y: "+ bestMove.y);
         return bestMove;
     }
 
