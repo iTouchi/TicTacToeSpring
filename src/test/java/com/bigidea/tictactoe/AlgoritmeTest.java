@@ -5,13 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tictactoe.entities.*;
 
-import javax.xml.catalog.Catalog;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlgoritmeTest {
 
-    private Cat _cat;
     private Algorithm _algo;
     private Board _board;
     private String[][] _tiles;
@@ -22,7 +19,6 @@ public class AlgoritmeTest {
     @BeforeEach
     void setUp() {
         //Arrange for each test
-        _cat = new Cat("Kitty", "Bites");
         _algo = new Algorithm();
         _board = new Board();
         _moveModel = new MoveModel();
@@ -31,18 +27,13 @@ public class AlgoritmeTest {
     }
 
     @Test
-    void testAlgo() {
-        // Arrange
-//        String[][] expected = {
-//                {"O", "", ""},
-//                {"", "", ""},
-//                {"", "", ""}
-//        };
+    void testPreventOponnentWinning() {
 
+        // Arrange
         String expected = "O";
         _tiles = new String[][]{
-                {"X", "", ""},
-                {"", "X", ""},
+                {"O", "", ""},
+                {"X", "X", ""},
                 {"", "", ""}
         };
         _board.setTiles(_tiles);
@@ -51,29 +42,43 @@ public class AlgoritmeTest {
         _moveModel = _algo.findBestMove(_board.getTiles(),_playerOne,_playerTwo);
         _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
 //        String[][] actual = _board.getTiles();
-        String actual = _board.getTile(2,2);
+        String actual = _board.getTile(1,2);
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
     }
 
     @Test
-    void setBadHabits() {
+    void testWinBeforePrevent() {
 
         // Arrange
-        String expected = "Scratches";
+        String expected = "O";
+        _tiles = new String[][]{
+                {"O", "O", ""},
+                {"X", "X", ""},
+                {"", "", ""}
+        };
+        _board.setTiles(_tiles);
 
         // Act
-        _cat.setBadHabits(expected);
-        String actual = _cat.getBadHabits();
+        _moveModel = _algo.findBestMove(_board.getTiles(),_playerOne,_playerTwo);
+        _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
+//        String[][] actual = _board.getTiles();
+        String actual = _board.getTile(0,2);
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The Algorithm prefers to win then to block the opponent ");
     }
+
+
 
     @AfterEach
     void tearDown() {
-        _cat = null;
+        _algo = null;
+        _board = null;
+        _moveModel = null;
+        _playerOne = null;
+        _playerTwo = null;
     }
 
 
