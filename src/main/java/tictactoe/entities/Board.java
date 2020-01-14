@@ -13,11 +13,11 @@ public class Board {
         return tiles;
     }
 
-    public void setTiles (String[][] tiles){
+    public void setTiles(String[][] tiles) {
         this.tiles = tiles;
     }
 
-    public String getTile (int x, int y){
+    public String getTile(int x, int y) {
         return tiles[x][y];
     }
 
