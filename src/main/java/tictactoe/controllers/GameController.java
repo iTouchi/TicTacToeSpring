@@ -28,9 +28,11 @@ public class GameController {
         if(game.isPresent()){
             game.get().makeMove(move.getX(), move.getY(), move.getPlayer());
             repository.save(game.get());
+            return game.get();
         }
 
-        return game.get();
+        return null;
+
     }
 
     @MessageMapping("/moveAi/{id}")
@@ -42,9 +44,10 @@ public class GameController {
         if(game.isPresent()){
             game.get().makeMoveAi(move.getX(), move.getY(), move.getPlayer());
             repository.save(game.get());
+            return game.get();
         }
 
-        return game.get();
+        return null;
     }
 
     @MessageMapping("join/{id}")
