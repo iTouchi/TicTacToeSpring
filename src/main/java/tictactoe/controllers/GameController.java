@@ -25,8 +25,10 @@ public class GameController {
 
         Optional<GameStateModel> game = repository.findById(id);
 
-        game.get().makeMove(move.getX(), move.getY(), move.getPlayer());
-        repository.save(game.get());
+        if(game.isPresent()){
+            game.get().makeMove(move.getX(), move.getY(), move.getPlayer());
+            repository.save(game.get());
+        }
 
         return game.get();
     }
@@ -37,8 +39,10 @@ public class GameController {
 
         Optional<GameStateModel> game = repository.findById(id);
 
-        game.get().makeMoveAi(move.getX(), move.getY(), move.getPlayer());
-        repository.save(game.get());
+        if(game.isPresent()){
+            game.get().makeMoveAi(move.getX(), move.getY(), move.getPlayer());
+            repository.save(game.get());
+        }
 
         return game.get();
     }
