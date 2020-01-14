@@ -72,54 +72,16 @@ public class Algorithm {
 
         // If there are no moves left and there is no winner the gameSession will return a tie
         if (!isMoveLeft(board)) {
-            return 0;//  -depth;
+            return 0;
         }
 
         // If it's the Maximizer's turn
         if (isMax) {
-            int best = -1000;
-
-            // Traverse all cells
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    // Check if cell is empty
-                    if (board[i][j].equals("")) {
-
-                        // Make the move
-                        board[i][j] = playerTwo.getSymbol();
-
-                        // Call minimax recursively and choose the max value
-                        best = max(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
-
-                        // Undo the move
-                        board[i][j] = "";
-                    }
-                }
-            }
-            return best;
+            return turnMaximizer(board,depth,isMax,playerOne,playerTwo);
         }
         // If it's the Minimizer's turn
         else {
-            int best = 1000;
-
-            // Traverse all cells
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    // Check if cell is empty
-                    if (board[i][j].equals("")) {
-
-                        // Make the move
-                        board[i][j] = playerOne.getSymbol();
-
-                        // Call minimax recursively and choose the min value
-                        best = min(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
-
-                        // Undo the move
-                        board[i][j] = "";
-                    }
-                }
-            }
-            return best;
+            return turnMinimizer(board,depth,isMax,playerOne,playerTwo);
         }
     }
 
@@ -154,9 +116,54 @@ public class Algorithm {
                 }
             }
         }
-        System.out.println("The value of the best move is : " + bestVal);
-        System.out.println("The best tile is : row: " + bestMove.x +" col: "+ bestMove.y);
         return bestMove;
+    }
+
+    public int turnMaximizer(String[][] board, int depth, boolean isMax, Player playerOne, Player playerTwo){
+        int best = -1000;
+
+        // Methode(symbol,board,depth,isMax,PlayerOne, PlayerTwo)
+
+        // Traverse all cells
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Check if cell is empty
+                if (board[i][j].equals("")) {
+
+                    // Make the move
+                    board[i][j] = playerTwo.getSymbol();
+
+                    // Call minimax recursively and choose the max value
+                    best = max(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
+
+                    // Undo the move
+                    board[i][j] = "";
+                }
+            }
+        }
+        return best;
+    }
+    public int turnMinimizer(String[][] board, int depth, boolean isMax, Player playerOne, Player playerTwo){
+        int best = 1000;
+
+        // Traverse all cells
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Check if cell is empty
+                if (board[i][j].equals("")) {
+
+                    // Make the move
+                    board[i][j] = playerOne.getSymbol();
+
+                    // Call minimax recursively and choose the min value
+                    best = min(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
+
+                    // Undo the move
+                    board[i][j] = "";
+                }
+            }
+        }
+        return best;
     }
 
 
