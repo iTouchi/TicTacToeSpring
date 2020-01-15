@@ -3,13 +3,14 @@ package com.bigidea.tictactoe;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tictactoe.adapters.AlgorithmAdapter;
 import tictactoe.entities.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlgoritmeTest {
 
-    private Algorithm _algo;
+    private AlgorithmAdapter _algo;
     private Board _board;
     private String[][] _tiles;
     private MoveModel _moveModel;
@@ -19,8 +20,8 @@ public class AlgoritmeTest {
     @BeforeEach
     void setUp() {
         //Arrange for each test
-        _algo = new Algorithm();
-        _board = new Board();
+        _algo = new AlgorithmAdapter();
+        _board = new Board(3,3);
         _moveModel = new MoveModel();
         _playerOne = new Player("X");
         _playerTwo = new Player("O");
@@ -41,7 +42,7 @@ public class AlgoritmeTest {
         // Act
         _moveModel = _algo.findBestMove(_board.getTiles(),_playerOne,_playerTwo);
         _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
-//        String[][] actual = _board.getTiles();
+
         String actual = _board.getTile(1,2);
 
         // Assert
@@ -69,8 +70,6 @@ public class AlgoritmeTest {
         // Assert
         assertEquals(expected, actual, "The Algorithm prefers to win then to block the opponent ");
     }
-
-
 
     @AfterEach
     void tearDown() {

@@ -5,8 +5,8 @@ public class Board {
     public String[][] tiles;
     private String name;
 
-    public Board() {
-        tiles = new String[3][3];
+    public Board(int x, int y) {
+        tiles = new String[x][y];
     }
 
     public String[][] getTiles() {

@@ -1,19 +1,22 @@
 package tictactoe.entities;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
+
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 
 public class Algorithm {
-    static int MAX = 1000;
-    static int MIN = -1000;
-
+//    static int MAX = 1000;
+//    static int MIN = -1000;
 
     // Returns a values based on who is winning
     // board[3][3] is the Tic-Tac-Toe board
     public int evaluate(String[][] board, String p1Symbol, String p2Symbol) {
 
         // Checking for horizontal victory
-        for (int row = 0; row < 3; row++) {
+        for (int row = 0; row < board.length; row++) {
             if (board[row][0].equals(board[row][1]) && board[row][1].equals(board[row][2])) {
                 if (board[row][0].equals(p2Symbol))
                     return +10;
@@ -22,8 +25,30 @@ public class Algorithm {
             }
         }
 
+//        // Checking for horizontal victory 2.0
+//        String[] arr = new String[board.length];
+//
+//        for (int row = 0; row < board.length; row++) {
+//            for (int col = 0; col < board.length; col++) {
+//                if (board[row][col].equals(board[row][col])) {
+//                    if (board[row][col].equals(p2Symbol))
+//                        arr[row] = p2Symbol;
+//                    if (board[row][col].equals(p1Symbol))
+//                        arr[row] = p1Symbol;
+//                }
+//            }
+//        }
+//        if (areSame(arr)) {
+//            if (arr[0].equals(p2Symbol)) {
+//                return +10;
+//            }
+//            if (arr[0].equals(p1Symbol)) {
+//                return -10;
+//            }
+//        }
+
         // Checking for vertical victory
-        for (int col = 0; col < 3; col++) {
+        for (int col = 0; col < board.length; col++) {
             if (board[0][col].equals(board[1][col]) && board[1][col].equals(board[2][col])) {
                 if (board[0][col].equals(p2Symbol))
                     return +10;
@@ -62,8 +87,8 @@ public class Algorithm {
     }
 
     // The minimax algorithm
-    public int minimax(String[][] board, int depth, boolean isMax, Player playerOne, Player playerTwo) {
-        int score = evaluate(board, playerOne.getSymbol(), playerTwo.getSymbol());
+    public int minimax(String[][] board, int depth, boolean isMax, String playerOne, String playerTwo) {
+        int score = evaluate(board, playerOne, playerTwo);
 
         // If Maximizer has won the gameSession will return the evaluated score for the Maximizer
         if (score == 10 || score == -10) {
@@ -77,18 +102,21 @@ public class Algorithm {
 
         // If it's the Maximizer's turn
         if (isMax) {
-            return turnMaximizer(board,depth,isMax,playerOne,playerTwo);
+            return turnMaximizer(board, depth, isMax, playerOne, playerTwo);
         }
         // If it's the Minimizer's turn
         else {
-            return turnMinimizer(board,depth,isMax,playerOne,playerTwo);
+            return turnMinimizer(board, depth, isMax, playerOne, playerTwo);
         }
     }
 
     // Find the move with the best value
-    public MoveModel findBestMove(String[][] board, Player playerOne, Player playerTwo) {
+    public int[] findBestMove(String[][] board, String playerOne, String playerTwo) {
         int bestVal = -1000;
-        MoveModel bestMove = new MoveModel(-1,-1);
+        MoveModel bestMove = new MoveModel(-1, -1);
+        int[] besty = new int[2];
+        besty[0] = -1;
+        besty[1] = -1;
 
         // Traverse all cells, evaluate minimax function for all empty cells.
         // Return the cell with with the optimal value.
@@ -98,7 +126,7 @@ public class Algorithm {
                 if (board[i][j].equals("")) {
 
 //                    // Make the move
-                    board[i][j] = playerTwo.getSymbol();
+                    board[i][j] = playerTwo;
 
                     // Compute evaluation function for this move.
                     int moveVal = minimax(board, 0, false, playerOne, playerTwo); // true false changed
@@ -109,17 +137,20 @@ public class Algorithm {
                     // If the value of the current move is more than the best value
                     // update best value.
                     if (moveVal > bestVal) {
-                        bestMove.x = i;
-                        bestMove.y = j;
+                        besty[0] = i;
+                        besty[1] = j;
                         bestVal = moveVal;
                     }
                 }
             }
         }
-        return bestMove;
+
+        System.out.println("row :" + besty[0] + " col:" + besty[1]);
+
+        return besty;
     }
 
-    public int turnMaximizer(String[][] board, int depth, boolean isMax, Player playerOne, Player playerTwo){
+    public int turnMaximizer(String[][] board, int depth, boolean isMax, String playerOne, String playerTwo) {
         int best = -1000;
 
         // Methode(symbol,board,depth,isMax,PlayerOne, PlayerTwo)
@@ -131,7 +162,7 @@ public class Algorithm {
                 if (board[i][j].equals("")) {
 
                     // Make the move
-                    board[i][j] = playerTwo.getSymbol();
+                    board[i][j] = playerTwo;
 
                     // Call minimax recursively and choose the max value
                     best = max(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
@@ -143,7 +174,8 @@ public class Algorithm {
         }
         return best;
     }
-    public int turnMinimizer(String[][] board, int depth, boolean isMax, Player playerOne, Player playerTwo){
+
+    public int turnMinimizer(String[][] board, int depth, boolean isMax, String playerOne, String playerTwo) {
         int best = 1000;
 
         // Traverse all cells
@@ -153,7 +185,7 @@ public class Algorithm {
                 if (board[i][j].equals("")) {
 
                     // Make the move
-                    board[i][j] = playerOne.getSymbol();
+                    board[i][j] = playerOne;
 
                     // Call minimax recursively and choose the min value
                     best = min(best, minimax(board, depth + 1, !isMax, playerOne, playerTwo));
@@ -166,5 +198,12 @@ public class Algorithm {
         return best;
     }
 
+    public static boolean areSame(String arr[]) {
+        // Put all array elements in a HashSet
+        Set<String> s = new HashSet<>(Arrays.asList(arr));
 
+        // If all elements are same, size of
+        // HashSet should be 1. As HashSet contains only distinct values.
+        return (s.size() == 1);
+    }
 }

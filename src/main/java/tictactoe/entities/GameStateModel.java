@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
+import tictactoe.adapters.AlgorithmAdapter;
 
 @Component
 public class GameStateModel {
@@ -23,13 +24,13 @@ public class GameStateModel {
     private Player playerTwo;
 
     //Ai
-    Algorithm algo = new Algorithm();
+    AlgorithmAdapter algo = new AlgorithmAdapter();
 
     //For Mongo
     private String playerOneId;
     private String playerTwoId;
 
-    public Board board = new Board();
+    public Board board = new Board(3,3);
 
     private String startingPlayer;
     private String currentPlayer;
