@@ -114,9 +114,9 @@ public class Algorithm {
     public int[] findBestMove(String[][] board, String playerOne, String playerTwo) {
         int bestVal = -1000;
         MoveModel bestMove = new MoveModel(-1, -1);
-        int[] besty = new int[2];
-        besty[0] = -1;
-        besty[1] = -1;
+        int[] best = new int[2];
+        best[0] = -1;
+        best[1] = -1;
 
         // Traverse all cells, evaluate minimax function for all empty cells.
         // Return the cell with with the optimal value.
@@ -137,17 +137,17 @@ public class Algorithm {
                     // If the value of the current move is more than the best value
                     // update best value.
                     if (moveVal > bestVal) {
-                        besty[0] = i;
-                        besty[1] = j;
+                        best[0] = i;
+                        best[1] = j;
                         bestVal = moveVal;
                     }
                 }
             }
         }
 
-        System.out.println("row :" + besty[0] + " col:" + besty[1]);
+        System.out.println("row :" + best[0] + " col:" + best[1]);
 
-        return besty;
+        return best;
     }
 
     public int turnMaximizer(String[][] board, int depth, boolean isMax, String playerOne, String playerTwo) {
@@ -156,8 +156,8 @@ public class Algorithm {
         // Methode(symbol,board,depth,isMax,PlayerOne, PlayerTwo)
 
         // Traverse all cells
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 // Check if cell is empty
                 if (board[i][j].equals("")) {
 

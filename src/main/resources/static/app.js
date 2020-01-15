@@ -274,6 +274,6 @@ $(function () {
     $("#board").on("click", "td", function () {
         sendMove($(this).attr('x'), $(this).attr('y'));
     });
-
     refresh();
+
 });

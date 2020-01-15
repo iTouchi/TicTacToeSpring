@@ -4,8 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tictactoe.adapters.AlgorithmAdapter;
+import tictactoe.entities.BoardState;
 import tictactoe.entities.*;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlgoritmeTest {
@@ -28,7 +30,7 @@ public class AlgoritmeTest {
     }
 
     @Test
-    void testPreventOponnentWinning() {
+    void componentTestPreventOponnentWinning() {
 
         // Arrange
         String expected = "O";
@@ -40,13 +42,33 @@ public class AlgoritmeTest {
         _board.setTiles(_tiles);
 
         // Act
-        _moveModel = _algo.findBestMove(_board.getTiles(),_playerOne,_playerTwo);
+        _moveModel = _algo.findBestMove(new BoardState(_board.getTiles(), _playerOne, _playerTwo));
         _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
 
         String actual = _board.getTile(1,2);
 
         // Assert
         assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+
+    @Test
+    void unitTestPreventOponnentWinning() {
+
+        // Arrange
+        Algorithm algo = new Algorithm();
+        final int[] expected = {1,2};
+
+        final String[][] board = new String[][]{
+                {"O", "", ""},
+                {"X", "X", ""},
+                {"", "", ""}
+        };
+
+        // Act
+        int[] actual = algo.findBestMove(board,"X","O");
+
+        // Assert
+        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
     }
 
     @Test
@@ -62,7 +84,7 @@ public class AlgoritmeTest {
         _board.setTiles(_tiles);
 
         // Act
-        _moveModel = _algo.findBestMove(_board.getTiles(),_playerOne,_playerTwo);
+        _moveModel = _algo.findBestMove(new BoardState(_board.getTiles(), _playerOne, _playerTwo));
         _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
 //        String[][] actual = _board.getTiles();
         String actual = _board.getTile(0,2);
