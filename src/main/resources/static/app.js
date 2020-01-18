@@ -275,5 +275,4 @@ $(function () {
         sendMove($(this).attr('x'), $(this).attr('y'));
     });
     refresh();
-
 });

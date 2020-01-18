@@ -8,8 +8,6 @@ public class AlgorithmAdapter {
 
     private Algorithm algo = new Algorithm();
 
-    //boardState
-
     public MoveModel findBestMove(BoardState boardState) {
 
         int[] best = algo.findBestMove(boardState.getBoard(), boardState.getPlayerOne().getSymbol(), boardState.getPlayerTwo().getSymbol());

@@ -9,6 +9,10 @@ public class Board {
         tiles = new String[x][y];
     }
 
+    public Board() {
+        tiles = new String[3][3];
+    }
+
     public String[][] getTiles() {
         return tiles;
     }

@@ -11,41 +11,45 @@ public class Algorithm {
 //    static int MAX = 1000;
 //    static int MIN = -1000;
 
+
     // Returns a values based on who is winning
     // board[3][3] is the Tic-Tac-Toe board
     public int evaluate(String[][] board, String p1Symbol, String p2Symbol) {
 
-        // Checking for horizontal victory
+//        // Checking for horizontal victory
+//        for (int row = 0; row < board.length; row++) {
+//            if (board[row][0].equals(board[row][1]) && board[row][1].equals(board[row][2])) {
+//                if (board[row][0].equals(p2Symbol))
+//                    return +10;
+//                if (board[row][0].equals(p1Symbol))
+//                    return -10;
+//            }
+//        }
+
+        // Checking for horizontal victory 2.0
+        int p1;
+        int p2;
+
         for (int row = 0; row < board.length; row++) {
-            if (board[row][0].equals(board[row][1]) && board[row][1].equals(board[row][2])) {
-                if (board[row][0].equals(p2Symbol))
-                    return +10;
-                if (board[row][0].equals(p1Symbol))
-                    return -10;
+            p1 = 0;
+            p2 = 0;
+            for (int col = 0; col < board.length - 1; col++) {
+                if (board[row][col].equals(board[row][col + 1])) {
+                    if (board[row][col].equals(p2Symbol))
+//                            arr[row] = p2Symbol;
+                        p2++;
+                    if (board[row][col].equals(p1Symbol))
+//                            arr[row] = p1Symbol;
+                        p1++;
+                    if (p1 == board.length - 1) {
+                        return -10;
+                    }
+                    if (p2 == board.length - 1) {
+                        return 10;
+                    }
+                }
             }
         }
-
-//        // Checking for horizontal victory 2.0
-//        String[] arr = new String[board.length];
-//
-//        for (int row = 0; row < board.length; row++) {
-//            for (int col = 0; col < board.length; col++) {
-//                if (board[row][col].equals(board[row][col])) {
-//                    if (board[row][col].equals(p2Symbol))
-//                        arr[row] = p2Symbol;
-//                    if (board[row][col].equals(p1Symbol))
-//                        arr[row] = p1Symbol;
-//                }
-//            }
-//        }
-//        if (areSame(arr)) {
-//            if (arr[0].equals(p2Symbol)) {
-//                return +10;
-//            }
-//            if (arr[0].equals(p1Symbol)) {
-//                return -10;
-//            }
-//        }
 
         // Checking for vertical victory
         for (int col = 0; col < board.length; col++) {
