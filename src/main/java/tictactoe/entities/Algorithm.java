@@ -80,8 +80,8 @@ public class Algorithm {
 
     //Check if there are moves remaining
     public boolean isMoveLeft(String[][] board) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 if (board[i][j].equals("")) {
                     return true;
                 }
@@ -124,8 +124,8 @@ public class Algorithm {
 
         // Traverse all cells, evaluate minimax function for all empty cells.
         // Return the cell with with the optimal value.
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 // Check if cell is empty
                 if (board[i][j].equals("")) {
 
@@ -183,8 +183,8 @@ public class Algorithm {
         int best = 1000;
 
         // Traverse all cells
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 // Check if cell is empty
                 if (board[i][j].equals("")) {
 
