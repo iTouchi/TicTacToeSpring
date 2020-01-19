@@ -51,15 +51,15 @@ public class Algorithm {
             }
         }
 
-        // Checking for vertical victory
-        for (int col = 0; col < board.length; col++) {
-            if (board[0][col].equals(board[1][col]) && board[1][col].equals(board[2][col])) {
-                if (board[0][col].equals(p2Symbol))
-                    return +10;
-                if (board[0][col].equals(p1Symbol))
-                    return -10;
-            }
-        }
+//        // Checking for vertical victory
+//        for (int col = 0; col < board.length; col++) {
+//            if (board[0][col].equals(board[1][col]) && board[1][col].equals(board[2][col])) {
+//                if (board[0][col].equals(p2Symbol))
+//                    return +10;
+//                if (board[0][col].equals(p1Symbol))
+//                    return -10;
+//            }
+//        }
 
         // Checking for diagonal victory
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2])) {

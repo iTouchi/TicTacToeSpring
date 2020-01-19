@@ -28,7 +28,6 @@ public class AlgoritmeTest {
         _playerOne = new Player("X");
         _playerTwo = new Player("O");
     }
-
     @Test
     void componentTestPreventOponnentWinning() {
 
@@ -50,9 +49,8 @@ public class AlgoritmeTest {
         // Assert
         assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
     }
-
     @Test
-    void unitTestPreventOponnentWinning() {
+    void unitTestPreventOponnentWinning3X3() {
 
         // Arrange
         Algorithm algo = new Algorithm();
@@ -70,9 +68,28 @@ public class AlgoritmeTest {
         // Assert
         assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
     }
-
     @Test
-    void testWinBeforePrevent() {
+    void unitTestPreventOponnentWinning4X4() {
+
+        // Arrange
+        Algorithm algo = new Algorithm();
+        final int[] expected = {1,3};
+
+        final String[][] board = new String[][]{
+                {"O", "O", "",""},
+                {"X", "X", "X",""},
+                {"", "", "",""},
+                {"", "", "",""}
+        };
+
+        // Act
+        int[] actual = algo.findBestMove(board,"X","O");
+
+        // Assert
+        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
+    void componentTestWinBeforePrevent3X3() {
 
         // Arrange
         String expected = "O";
@@ -92,7 +109,27 @@ public class AlgoritmeTest {
         // Assert
         assertEquals(expected, actual, "The Algorithm prefers to win then to block the opponent ");
     }
+    @Test
+    void unitTestWinBeforePrevent4X4() {
 
+        // Arrange
+        Algorithm algo = new Algorithm();
+        final int[] expected = {0,3};
+
+        final String[][] board = new String[][]{
+                {"O", "O", "O",""},
+                {"X", "X", "X",""},
+                {"", "", "","",""},
+                {"", "", "","",""}
+        };
+
+
+        // Act
+        int[] actual = algo.findBestMove(board,"X","O");
+
+        // Assert
+        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
     @AfterEach
     void tearDown() {
         _algo = null;
