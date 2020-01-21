@@ -29,66 +29,6 @@ public class AlgoritmeTest {
         _playerTwo = new Player("O");
     }
     @Test
-    void componentTestPreventOponnentWinning() {
-
-        // Arrange
-        String expected = "O";
-        _tiles = new String[][]{
-                {"O", "", ""},
-                {"X", "X", ""},
-                {"", "", ""}
-        };
-        _board.setTiles(_tiles);
-
-        // Act
-        _moveModel = _algo.findBestMove(new BoardState(_board.getTiles(), _playerOne, _playerTwo));
-        _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
-
-        String actual = _board.getTile(1,2);
-
-        // Assert
-        assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
-    }
-    @Test
-    void unitTestPreventOponnentWinning3X3() {
-
-        // Arrange
-        Algorithm algo = new Algorithm();
-        final int[] expected = {1,2};
-
-        final String[][] board = new String[][]{
-                {"O", "", ""},
-                {"X", "X", ""},
-                {"", "", ""}
-        };
-
-        // Act
-        int[] actual = algo.findBestMove(board,"X","O");
-
-        // Assert
-        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
-    }
-    @Test
-    void unitTestPreventOponnentWinning4X4() {
-
-        // Arrange
-        Algorithm algo = new Algorithm();
-        final int[] expected = {1,3};
-
-        final String[][] board = new String[][]{
-                {"O", "O", "",""},
-                {"X", "X", "X",""},
-                {"", "", "",""},
-                {"", "", "",""}
-        };
-
-        // Act
-        int[] actual = algo.findBestMove(board,"X","O");
-
-        // Assert
-        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
-    }
-    @Test
     void componentTestWinBeforePrevent3X3() {
 
         // Arrange
@@ -110,6 +50,109 @@ public class AlgoritmeTest {
         assertEquals(expected, actual, "The Algorithm prefers to win then to block the opponent ");
     }
     @Test
+    void componentTestPreventOpponentWinningHorizontal() {
+
+        // Arrange
+        String expected = "O";
+        _tiles = new String[][]{
+                {"O", "", ""},
+                {"X", "X", ""},
+                {"", "", ""}
+        };
+        _board.setTiles(_tiles);
+
+        // Act
+        _moveModel = _algo.findBestMove(new BoardState(_board.getTiles(), _playerOne, _playerTwo));
+        _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
+
+        String actual = _board.getTile(1,2);
+
+        // Assert
+        assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
+    void componentTestPreventOpponentWinningVertical() {
+
+        // Arrange
+        String expected = "O";
+        _tiles = new String[][]{
+                {"O", "X", ""},
+                {"", "X", ""},
+                {"", "", ""}
+        };
+        _board.setTiles(_tiles);
+
+        // Act
+        _moveModel = _algo.findBestMove(new BoardState(_board.getTiles(), _playerOne, _playerTwo));
+        _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
+
+        String actual = _board.getTile(2,1);
+
+        // Assert
+        assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
+    void componentTestPreventOpponentWinningDiagonal() {
+
+        // Arrange
+        String expected = "O";
+        _tiles = new String[][]{
+                {"X", "O", "O",""},
+                {"", "X", "",""},
+                {"", "", "X",""},
+                {"", "", "",""}
+        };
+        _board.setTiles(_tiles);
+
+        // Act
+        _moveModel = _algo.findBestMove(new BoardState(_board.getTiles(), _playerOne, _playerTwo));
+        _board.setTile(_moveModel.x,_moveModel.y,_playerTwo.getSymbol());
+
+        String actual = _board.getTile(3,3);
+
+        // Assert
+        assertEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
+    void unitTestPreventOpponentWinning3X3() {
+
+        // Arrange
+        Algorithm algo = new Algorithm();
+        final int[] expected = {1,2};
+
+        final String[][] board = new String[][]{
+                {"O", "", ""},
+                {"X", "X", ""},
+                {"", "", ""}
+        };
+
+        // Act
+        int[] actual = algo.findBestMove(board,"X","O");
+
+        // Assert
+        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
+    void unitTestPreventOpponentWinningDiagonal4X4() {
+
+        // Arrange
+        Algorithm algo = new Algorithm();
+        final int[] expected = {3,3};
+
+        final String[][] board = new String[][]{
+                {"X", "O", "O",""},
+                {"", "X", "",""},
+                {"", "", "X",""},
+                {"", "", "",""}
+        };
+
+        // Act
+        int[] actual = algo.findBestMove(board,"X","O");
+
+        // Assert
+        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
     void unitTestWinBeforePrevent4X4() {
 
         // Arrange
@@ -123,6 +166,26 @@ public class AlgoritmeTest {
                 {"", "", "","",""}
         };
 
+
+        // Act
+        int[] actual = algo.findBestMove(board,"X","O");
+
+        // Assert
+        assertArrayEquals(expected, actual, "The Algorithm prevents opponent from winning ");
+    }
+    @Test
+    void unitTestPreventOpponentWinning4X4() {
+
+        // Arrange
+        Algorithm algo = new Algorithm();
+        final int[] expected = {1,3};
+
+        final String[][] board = new String[][]{
+                {"O", "O", "",""},
+                {"X", "X", "X",""},
+                {"", "", "",""},
+                {"", "", "",""}
+        };
 
         // Act
         int[] actual = algo.findBestMove(board,"X","O");

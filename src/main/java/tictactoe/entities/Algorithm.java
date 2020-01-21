@@ -1,79 +1,66 @@
 package tictactoe.entities;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Arrays;
-
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 
 public class Algorithm {
-//    static int MAX = 1000;
-//    static int MIN = -1000;
 
+    int checkPlayer1 = 0;
+    int checkPlayer2 = 0;
 
     // Returns a values based on who is winning
     // board[3][3] is the Tic-Tac-Toe board
     public int evaluate(String[][] board, String p1Symbol, String p2Symbol) {
-
-//        // Checking for horizontal victory
-//        for (int row = 0; row < board.length; row++) {
-//            if (board[row][0].equals(board[row][1]) && board[row][1].equals(board[row][2])) {
-//                if (board[row][0].equals(p2Symbol))
-//                    return +10;
-//                if (board[row][0].equals(p1Symbol))
-//                    return -10;
-//            }
-//        }
-
         // Checking for horizontal victory 2.0
-        int p1;
-        int p2;
-
         for (int row = 0; row < board.length; row++) {
-            p1 = 0;
-            p2 = 0;
+            resetPlayerCheck();
             for (int col = 0; col < board.length - 1; col++) {
                 if (board[row][col].equals(board[row][col + 1])) {
-                    if (board[row][col].equals(p2Symbol))
-//                            arr[row] = p2Symbol;
-                        p2++;
-                    if (board[row][col].equals(p1Symbol))
-//                            arr[row] = p1Symbol;
-                        p1++;
-                    if (p1 == board.length - 1) {
+                    checkPlayerSymbol(board, row, col, p1Symbol, p2Symbol);
+                    if (checkPlayer1 == board.length - 1) {
                         return -10;
                     }
-                    if (p2 == board.length - 1) {
+                    if (checkPlayer2 == board.length - 1) {
                         return 10;
                     }
                 }
             }
         }
-
-//        // Checking for vertical victory
-//        for (int col = 0; col < board.length; col++) {
-//            if (board[0][col].equals(board[1][col]) && board[1][col].equals(board[2][col])) {
-//                if (board[0][col].equals(p2Symbol))
-//                    return +10;
-//                if (board[0][col].equals(p1Symbol))
-//                    return -10;
-//            }
-//        }
-
-        // Checking for diagonal victory
-        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2])) {
-            if (board[0][0].equals(p2Symbol))
-                return +10;
-            if (board[0][0].equals(p1Symbol))
-                return -10;
+        // Checking for vertical victory 2.0
+        for (int col = 0; col < board.length; col++) {
+            resetPlayerCheck();
+            for (int row = 0; row < board.length - 1; row++) {
+                if (board[row][col].equals(board[row + 1][col])) {
+                    checkPlayerSymbol(board, row, col, p1Symbol, p2Symbol);
+                    if (checkPlayer1 == board.length - 1) {
+                        return -10;
+                    }
+                    if (checkPlayer2 == board.length - 1) {
+                        return 10;
+                    }
+                }
+            }
         }
-        if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0])) {
-            if (board[0][2].equals(p2Symbol))
-                return +10;
-            if (board[0][2].equals(p1Symbol))
+        resetPlayerCheck();
+        // Checking for diagonal victory 2.0
+        for (int i = 0; i < board.length - 1; i++) {
+            if (board[i][i].equals(board[i + 1][i + 1])) {
+                if (board[i][i].equals(p2Symbol))
+                    checkPlayer2++;
+                else if (board[i][i].equals(p1Symbol))
+                    checkPlayer1++;
+                else {
+                    resetPlayerCheck();
+                }
+            }
+            if (checkPlayer1 == board.length - 1) {
                 return -10;
+            }
+            if (checkPlayer2 == board.length - 1) {
+                return 10;
+            }
         }
+
         // Else if none has won return 0 for Draw
         return 0;
     }
@@ -202,12 +189,92 @@ public class Algorithm {
         return best;
     }
 
-    public static boolean areSame(String arr[]) {
-        // Put all array elements in a HashSet
-        Set<String> s = new HashSet<>(Arrays.asList(arr));
+    public int evaluateOld(String[][] board, String p1Symbol, String p2Symbol) {
+//
+////        // Checking for horizontal victory
+////        for (int row = 0; row < board.length; row++) {
+////            if (board[row][0].equals(board[row][1]) && board[row][1].equals(board[row][2])) {
+////                if (board[row][0].equals(p2Symbol))
+////                    return +10;
+////                if (board[row][0].equals(p1Symbol))
+////                    return -10;
+////            }
+////        }
+//
+//
+//        // Checking for vertical victory
+//        for (int col = 0; col < board.length; col++) {
+//            if (board[0][col].equals(board[1][col]) && board[1][col].equals(board[2][col])) {
+//                if (board[0][col].equals(p2Symbol))
+//                    return +10;
+//                if (board[0][col].equals(p1Symbol))
+//                    return -10;
+//            }
+//        }
+//
+//        // Checking for diagonal victory
+//        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2])) {
+//            if (board[0][0].equals(p2Symbol))
+//                return +10;
+//            if (board[0][0].equals(p1Symbol))
+//                return -10;
+//        }
+//        if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0])) {
+//            if (board[0][2].equals(p2Symbol))
+//                return +10;
+//            if (board[0][2].equals(p1Symbol))
+//                return -10;
+//        }
+//        // Else if none has won return 0 for Draw
+        return 0;
+    }
 
-        // If all elements are same, size of
-        // HashSet should be 1. As HashSet contains only distinct values.
-        return (s.size() == 1);
+    public int evaluateOld2(String[][] board, String playerSymbol, int x, int y) {
+
+//        if(board[x][y] == ""){
+//            board[x][y] = playerSymbol;
+//        }
+
+        // check horizontal
+        for (int i = 0; i < board.length; i++) {
+            if (board[x][i] != playerSymbol)
+                break;
+            if (i == board.length - 1) {
+                if (playerSymbol == "O") {
+                    return 10;
+                } else {
+                    return -10;
+                }
+            }
+        }
+        // check vertical
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][y] != playerSymbol)
+                break;
+            if (i == board.length - 1) {
+                if (playerSymbol == "X") {
+                    return -10;
+                } else {
+                    return 10;
+                }
+            }
+        }
+
+        // Else if none has won return 0 for Draw
+        return 0;
+    }
+
+    public void checkPlayerSymbol(String[][] board, int row, int col, String p1Symbol, String p2Symbol){
+        if (board[row][col].equals(p2Symbol)){
+            this.checkPlayer2++;
+        }
+        if (board[row][col].equals(p1Symbol)){
+            this.checkPlayer1++;
+        }
+    }
+
+    public void resetPlayerCheck(){
+        checkPlayer1 = 0;
+        checkPlayer2 = 0;
     }
 }
